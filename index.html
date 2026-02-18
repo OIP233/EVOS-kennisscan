@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EVOS Kennisscan Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root {
@@ -41,8 +41,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);min
 .card-hover:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.1);}
 
 /* TYPOGRAPHY */
-h1{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--dark);letter-spacing:-0.02em;}
-h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--dark);}
+h1{font-family:'DM Sans',sans-serif;font-size:32px;font-weight:800;color:var(--dark);letter-spacing:-0.01em;}
+h2{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--dark);}
 h3{font-size:17px;font-weight:600;color:var(--dark);}
 .subtitle{font-size:14px;color:var(--text-light);margin-top:6px;line-height:1.5;}
 .mono{font-family:'Space Mono',monospace;}
@@ -267,6 +267,120 @@ html{scroll-behavior:smooth;}
 
 /* EVOS HEADER DECORATION */
 .evos-stripe{height:4px;background:linear-gradient(90deg,var(--primary),var(--evos-teal),var(--accent));width:100%;}
+
+/* ═══════════════════════════════════════════════════
+   INDUSTRIAL ANIMATIONS & SOUND EFFECTS
+   ═══════════════════════════════════════════════════ */
+
+/* Option select: mechanical click feedback */
+@keyframes optionClick {
+  0%   { transform: scale(1); box-shadow: 0 2px 8px rgba(0,164,180,0); }
+  30%  { transform: scale(0.97); box-shadow: 0 0 0 3px rgba(0,164,180,0.35); }
+  70%  { transform: scale(1.01); box-shadow: 0 0 0 6px rgba(0,164,180,0.12); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(0,164,180,0); }
+}
+.option-click-anim {
+  animation: optionClick 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Progress bar pulse on new question */
+@keyframes progressPulse {
+  0%   { filter: brightness(1); }
+  40%  { filter: brightness(1.4) drop-shadow(0 0 4px rgba(0,164,180,0.7)); }
+  100% { filter: brightness(1); }
+}
+.progress-fill-pulse {
+  animation: progressPulse 0.5s ease forwards;
+}
+
+/* Question card entrance: slide in from right */
+@keyframes questionSlideIn {
+  0%   { opacity: 0; transform: translateX(24px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.question-enter {
+  animation: questionSlideIn 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* Result circle: dramatic scale-in */
+@keyframes resultAppear {
+  0%   { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  60%  { opacity: 1; transform: scale(1.08) rotate(2deg); }
+  80%  { transform: scale(0.96) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.result-circle-anim {
+  animation: resultAppear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Score counter: number tick animation */
+@keyframes scoreTick {
+  0%   { opacity: 0.3; transform: translateY(-4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.score-tick {
+  animation: scoreTick 0.18s ease forwards;
+}
+
+/* Scan line effect on result screen (industrial HUD) */
+@keyframes scanLine {
+  0%   { top: 0%; opacity: 0.6; }
+  100% { top: 100%; opacity: 0; }
+}
+.scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,164,180,0.6), transparent);
+  pointer-events: none;
+  animation: scanLine 1.8s linear;
+  z-index: 10;
+}
+
+/* Feedback flash: correct/incorrect overlay shimmer */
+@keyframes correctFlash {
+  0%   { box-shadow: inset 0 0 0 0 rgba(56,189,102,0); }
+  30%  { box-shadow: inset 0 0 0 3px rgba(56,189,102,0.5); }
+  100% { box-shadow: inset 0 0 0 0 rgba(56,189,102,0); }
+}
+@keyframes incorrectFlash {
+  0%   { box-shadow: inset 0 0 0 0 rgba(239,68,68,0); }
+  30%  { box-shadow: inset 0 0 0 3px rgba(239,68,68,0.5); }
+  100% { box-shadow: inset 0 0 0 0 rgba(239,68,68,0); }
+}
+.flash-correct { animation: correctFlash 0.6s ease forwards; }
+.flash-incorrect { animation: incorrectFlash 0.6s ease forwards; }
+
+/* Stat cards stagger entrance */
+@keyframes statCardIn {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.stat-card-anim-1 { animation: statCardIn 0.4s 0.3s ease both; }
+.stat-card-anim-2 { animation: statCardIn 0.4s 0.5s ease both; }
+.stat-card-anim-3 { animation: statCardIn 0.4s 0.7s ease both; }
+
+/* Sound mute toggle button */
+.sound-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  background: white;
+  color: var(--primary);
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: all 0.2s;
+}
+.sound-toggle:hover { background: var(--primary); color: white; }
 </style>
 </head>
 <body>
@@ -1597,7 +1711,19 @@ function selectOpt(k) {
   const req=parseCorrect(q.correct).length>1&&q.type.includes('meerdere')?parseCorrect(q.correct).length:1;
   if(req===1){st.selected=[k];}
   else{const i=st.selected.indexOf(k);if(i>=0)st.selected.splice(i,1);else if(st.selected.length<req)st.selected.push(k);}
+  // Industrial click sound + button animation
+  SoundEngine.sounds.optionSelect();
   renderQuiz();
+  // Animate the clicked option
+  setTimeout(() => {
+    const optEls = document.querySelectorAll('.option-item');
+    optEls.forEach(el => {
+      if (el.getAttribute('data-key') === k) {
+        el.classList.add('option-click-anim');
+        setTimeout(() => el.classList.remove('option-click-anim'), 300);
+      }
+    });
+  }, 10);
 }
 
 function submitAns() {
@@ -1613,13 +1739,35 @@ function submitAns() {
   st.answers[st.idx]={selected:[...st.selected],correct:correctAns,isCorrect,delta};
   st.feedback=true;st.showToast=true;
   renderQuiz();
+  // Play correct/incorrect sound
+  if (isCorrect) SoundEngine.sounds.correct();
+  else SoundEngine.sounds.incorrect();
+  // Flash animation on q-card
+  setTimeout(() => {
+    const card = document.querySelector('.q-card-correct, .q-card-incorrect');
+    if (card) {
+      card.classList.add(isCorrect ? 'flash-correct' : 'flash-incorrect');
+    }
+  }, 20);
   if(isRef&&st.score>=cfg.targetScore){setTimeout(()=>finishQuiz(),1800);}
 }
 
 function nextQ() {
   const st=App.quizState;const total=App.quizConfig.questions.length;
+  SoundEngine.sounds.nextQuestion();
+  SoundEngine.sounds.progressTick();
   if(st.idx+1>=total){finishQuiz();}
-  else{st.idx++;st.selected=[];st.feedback=false;renderQuiz();}
+  else{
+    st.idx++;st.selected=[];st.feedback=false;
+    renderQuiz();
+    // Animate question card entrance + progress bar pulse
+    setTimeout(() => {
+      const card = document.querySelector('.card.mb-16');
+      if (card) card.classList.add('question-enter');
+      const pf = document.querySelector('.progress-fill');
+      if (pf) { pf.classList.add('progress-fill-pulse'); setTimeout(()=>pf.classList.remove('progress-fill-pulse'),600); }
+    }, 20);
+  }
 }
 
 function finishQuiz() {
@@ -1678,6 +1826,12 @@ function renderResultaten() {
     </div>`;
   }
   
+  // Trigger result sound effect
+  setTimeout(() => {
+    if (passed) SoundEngine.sounds.resultPass();
+    else SoundEngine.sounds.resultFail();
+  }, 400);
+
   app().innerHTML = `
   <div class="evos-stripe no-print"></div>
   <div class="container">
@@ -1688,7 +1842,7 @@ function renderResultaten() {
     </div>
     
     <div class="text-center mb-32">
-      <div class="result-circle ${passed?'pass':'fail'}">
+      <div class="result-circle ${passed?'pass':'fail'} result-circle-anim">
         <div class="score">${isRef?r.totalQuestions:pct+'%'}</div>
         <div class="score-label">${isRef?'vragen':'correct'}</div>
       </div>
@@ -1696,10 +1850,11 @@ function renderResultaten() {
       <p class="subtitle">${isRef?'Je hebt '+r.totalQuestions+' vragen beantwoord om de target score te behalen.':(passed?'Je hebt de kennischeck succesvol afgerond.':'Je hebt minder dan '+r.passPercent+'% correct beantwoord.')}</p>
     </div>
     
-    <div class="grid-3 mb-24">
-      <div class="card stat-card"><div class="stat-value" style="color:var(--success);">${r.correctCount}/${r.totalQuestions}</div><div class="stat-label">Correct beantwoord</div></div>
-      <div class="card stat-card"><div class="stat-value" style="color:var(--accent);">🔥 ${r.maxStreak||0}</div><div class="stat-label">Langste reeks</div></div>
-      <div class="card stat-card"><div class="stat-value">${formatTime(r.timeMs)}</div><div class="stat-label">Totale tijd</div></div>
+    <div class="grid-3 mb-24" style="position:relative;">
+      <div class="scan-line"></div>
+      <div class="card stat-card stat-card-anim-1"><div class="stat-value" style="color:var(--success);">${r.correctCount}/${r.totalQuestions}</div><div class="stat-label">Correct beantwoord</div></div>
+      <div class="card stat-card stat-card-anim-2"><div class="stat-value" style="color:var(--accent);">🔥 ${r.maxStreak||0}</div><div class="stat-label">Langste reeks</div></div>
+      <div class="card stat-card stat-card-anim-3"><div class="stat-value">${formatTime(r.timeMs)}</div><div class="stat-label">Totale tijd</div></div>
     </div>
     
 
@@ -1716,8 +1871,116 @@ function renderResultaten() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// INDUSTRIAL SOUND ENGINE (Web Audio API - synthetic, no files)
+// ═══════════════════════════════════════════════════════════════
+const SoundEngine = (() => {
+  let ctx = null;
+  let muted = false;
+
+  function getCtx() {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  function playTone(opts) {
+    if (muted) return;
+    try {
+      const c = getCtx();
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      const now = c.currentTime;
+      osc.type = opts.type || 'sine';
+      osc.frequency.setValueAtTime(opts.freq || 440, now);
+      if (opts.freqEnd) osc.frequency.linearRampToValueAtTime(opts.freqEnd, now + opts.dur);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(opts.vol || 0.18, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + opts.dur);
+      osc.connect(gain); gain.connect(c.destination);
+      osc.start(now); osc.stop(now + opts.dur + 0.05);
+    } catch(e) {}
+  }
+
+  function playNoise(dur, vol=0.08) {
+    if (muted) return;
+    try {
+      const c = getCtx();
+      const bufSize = c.sampleRate * dur;
+      const buf = c.createBuffer(1, bufSize, c.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      const gain = c.createGain();
+      const now = c.currentTime;
+      gain.gain.setValueAtTime(vol, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      src.connect(gain); gain.connect(c.destination);
+      src.start(now);
+    } catch(e) {}
+  }
+
+  const sounds = {
+    optionSelect: () => {
+      playNoise(0.04, 0.06);
+      playTone({ type:'square', freq:280, freqEnd:200, dur:0.06, vol:0.08 });
+    },
+    nextQuestion: () => {
+      playTone({ type:'square', freq:620, dur:0.07, vol:0.12 });
+      setTimeout(() => playTone({ type:'square', freq:780, dur:0.06, vol:0.08 }), 80);
+    },
+    correct: () => {
+      playTone({ type:'sine', freq:660, dur:0.12, vol:0.15 });
+      setTimeout(() => playTone({ type:'sine', freq:880, dur:0.18, vol:0.18 }), 120);
+    },
+    incorrect: () => {
+      playNoise(0.08, 0.07);
+      playTone({ type:'sawtooth', freq:240, freqEnd:140, dur:0.22, vol:0.10 });
+    },
+    progressTick: () => {
+      playTone({ type:'square', freq:1200, dur:0.025, vol:0.06 });
+    },
+    resultPass: () => {
+      [0, 120, 240, 380].forEach((delay, i) => {
+        setTimeout(() => {
+          playTone({ type:'sine', freq:[440,550,660,880][i], dur:0.15, vol:0.15 });
+        }, delay);
+      });
+      setTimeout(() => {
+        playNoise(0.1, 0.05);
+        playTone({ type:'sine', freq:1100, dur:0.4, vol:0.2 });
+      }, 600);
+    },
+    resultFail: () => {
+      playTone({ type:'sawtooth', freq:380, freqEnd:200, dur:0.3, vol:0.12 });
+      setTimeout(() => playNoise(0.15, 0.05), 200);
+      setTimeout(() => playTone({ type:'square', freq:160, dur:0.4, vol:0.10 }), 350);
+    },
+  };
+
+  function toggleMute() {
+    muted = !muted;
+    const btn = document.getElementById('soundToggle');
+    if (btn) btn.textContent = muted ? '🔇' : '🔊';
+  }
+
+  function init() {
+    const btn = document.createElement('button');
+    btn.id = 'soundToggle';
+    btn.className = 'sound-toggle no-print';
+    btn.title = 'Geluid aan/uit';
+    btn.textContent = '🔊';
+    btn.onclick = toggleMute;
+    document.body.appendChild(btn);
+  }
+
+  return { sounds, toggleMute, init };
+})();
+
+// ═══════════════════════════════════════════════════════════════
 // START
 // ═══════════════════════════════════════════════════════════════
+SoundEngine.init();
 nav('splash');
 </script>
 </body>
